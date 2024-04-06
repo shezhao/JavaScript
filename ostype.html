@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>操作系统类型及版本检测</title>
+</head>
+<body>
+  <h1 id="osInfo"></h1>
+
+  <script>
+    // 获取User-Agent字符串
+    const userAgent = navigator.userAgent;
+
+    // 定义操作系统类型及版本的正则表达式
+    const osRegex = {
+      'Windows': /Windows NT (\d+\.\d+)/,
+      'MacOS': /Mac OS X (\d+)[_.](\d+)/,
+      'iOS': /(?:iPhone|iPad|iPod).* OS (\d+)[_.](\d+)/,
+      'Android': /Android (\d+\.\d+)/,
+      'Linux': /Linux/
+    };
+
+    // 初始化操作系统信息
+    let osType = '未知';
+    let osVersion = '';
+
+    // 匹配User-Agent字符串以确定操作系统类型及版本
+    for (const [os, regex] of Object.entries(osRegex)) {
+      const match = userAgent.match(regex);
+      if (match) {
+        osType = os;
+        osVersion = match[1] || '';
+        if (os === 'MacOS') {
+          osVersion = match[1] + '.' + match[2];
+        }
+        break;
+      }
+    }
+
+    // 显示操作系统类型及版本信息
+    const osInfoElement = document.getElementById('osInfo');
+    osInfoElement.textContent = `您正在使用的操作系统是：${osType}，版本号为：${osVersion}`;
+  </script>
+</body>
+</html>

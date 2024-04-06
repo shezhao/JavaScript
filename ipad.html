@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP地址位置查询</title>
+</head>
+<body>
+  <h1>您的IP地址位置信息：</h1>
+  <p id="ipLocation"></p>
+
+  <script>
+    fetch('https://ipapi.co/json/')
+      .then(response => response.json())
+      .then(data => {
+        const ipLocationElement = document.getElementById('ipLocation');
+        ipLocationElement.textContent = `您的IP地址：${data.ip}\n位置：${data.city}, ${data.region}, ${data.country_name}\n经纬度：${data.latitude}, ${data.longitude}`;
+      })
+      .catch(error => {
+        console.error('获取IP地址位置信息失败:', error);
+      });
+  </script>
+</body>
+</html>

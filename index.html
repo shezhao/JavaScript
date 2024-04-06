@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>前端小练习</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .slideshow {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>查找</h1>
+  <h2>您的IP地址是: <span id="ipAddress"></span></h2>
+
+  <script>
+    // 使用第三方服务获取IP地址信息
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        const ipAddress = data.ip;
+        document.getElementById('ipAddress').textContent = ipAddress;
+      })
+      .catch(error => {
+        console.error('获取IP地址失败:', error);
+      });
+  </script>
+  <h3>您的IP地址位置信息：</h3>
+  <p id="ipLocation"></p>
+
+  <script>
+    fetch('https://ipapi.co/json/')
+      .then(response => response.json())
+      .then(data => {
+        const ipLocationElement = document.getElementById('ipLocation');
+        ipLocationElement.textContent = `您的IP地址：${data.ip}\n位置：${data.city}, ${data.region}, ${data.country_name}\n经纬度：${data.latitude}, ${data.longitude}`;
+      })
+      .catch(error => {
+        console.error('获取IP地址位置信息失败:', error);
+      });
+  </script>
+  <h2 id="osInfo"></h2>
+
+  <script>
+    // 获取User-Agent字符串
+    const userAgent = navigator.userAgent;
+
+    // 定义操作系统类型及版本的正则表达式
+    const osRegex = {
+      'Windows': /Windows NT (\d+\.\d+)/,
+      'MacOS': /Mac OS X (\d+)[_.](\d+)/,
+      'iOS': /(?:iPhone|iPad|iPod).* OS (\d+)[_.](\d+)/,
+      'Android': /Android (\d+\.\d+)/,
+      'Linux': /Linux/
+    };
+
+    // 初始化操作系统信息
+    let osType = '未知';
+    let osVersion = '';
+
+    // 匹配User-Agent字符串以确定操作系统类型及版本
+    for (const [os, regex] of Object.entries(osRegex)) {
+      const match = userAgent.match(regex);
+      if (match) {
+        osType = os;
+        osVersion = match[1] || '';
+        if (os === 'MacOS') {
+          osVersion = match[1] + '.' + match[2];
+        }
+        break;
+      }
+    }
+
+    // 显示操作系统类型及版本信息
+    const osInfoElement = document.getElementById('osInfo');
+    osInfoElement.textContent = `您正在使用的操作系统可能是：${osType}，版本号可能为：${osVersion}`;
+  </script>
+  <div class="container">
+    <h2>QQ查找Phone</h2>
+    <input type="text" id="textInput" placeholder="输入文本">
+    <button onclick="qqFindPhone()">查找</button>
+    <div id="qq_display"></div>
+    <div><br><br></div>
+  </div>
+
+  <script src="script.js"></script>
+  <div class="slideshow">
+    <img src="images/image_001.png" alt="Image 1">
+  </div>
+
+  <script>
+    const imageCount = 33; // 图片总数
+    let currentIndex = 1; // 当前显示图片的索引
+
+    function showImage(index) {
+      const slideshow = document.querySelector('.slideshow');
+      slideshow.innerHTML = `<img src="images/image_${index.toString().padStart(3, '0')}.png" alt="Image ${index}">`;
+    }
+
+    function nextImage() {
+      currentIndex = currentIndex % imageCount + 1; // 循环显示图片
+      showImage(currentIndex);
+    }
+
+    // 设置定时器，每隔一定时间切换图片
+    setInterval(nextImage, 3000); // 每隔3秒切换一次图片
+  </script>
+  
+</body>
+</html>

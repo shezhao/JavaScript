@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>显示访问者IP地址</title>
+</head>
+<body>
+  <h1>您的IP地址是: <span id="ipAddress"></span></h1>
+
+  <script>
+    // 使用第三方服务获取IP地址信息
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        const ipAddress = data.ip;
+        document.getElementById('ipAddress').textContent = ipAddress;
+      })
+      .catch(error => {
+        console.error('获取IP地址失败:', error);
+      });
+  </script>
+</body>
+</html>

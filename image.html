@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图片轮播</title>
+  <style>
+    .slideshow {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="slideshow">
+    <img src="images/image_001.png" alt="Image 1">
+  </div>
+
+  <script>
+    const imageCount = 33; // 图片总数
+    let currentIndex = 1; // 当前显示图片的索引
+
+    function showImage(index) {
+      const slideshow = document.querySelector('.slideshow');
+      slideshow.innerHTML = `<img src="images/image_${index.toString().padStart(3, '0')}.png" alt="Image ${index}">`;
+    }
+
+    function nextImage() {
+      currentIndex = currentIndex % imageCount + 1; // 循环显示图片
+      showImage(currentIndex);
+    }
+
+    // 设置定时器，每隔一定时间切换图片
+    setInterval(nextImage, 3000); // 每隔3秒切换一次图片
+  </script>
+</body>
+</html>
