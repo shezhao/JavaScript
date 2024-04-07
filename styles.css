@@ -1,0 +1,127 @@
+/* 重置默认的边距和填充 */
+body, html {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 为整个页面设置宜人的字体 */
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f5f5f5;
+  }
+  /* 美化标题 */
+  h1 {
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  h2 {
+    color: #555;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  h3 {
+    color: #777;
+    margin-top: 20px;
+    text-align: center;
+
+  }
+  #iplo{
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    width: 80%;
+    margin: auto;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  }
+  
+  /* 美化主容器 */
+  .container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* 美化表单元素 */
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* 美化 IP 和操作系统信息 */
+  #ipAddress, #ipLocation, #osInfo {
+    font-weight: bold;
+  }
+  
+  /* 美化幻灯片图片 */
+  .slideshow {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  /*渐变背景*/
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background: linear-gradient(to bottom, #E0E5EC, #C9D6ED); /* 渐变色从 #E0E5EC 到 #C9D6ED */
+  }
+  
+  #canvas_box {
+    width: 80%; /* 设置父元素宽度 */
+    margin: 0 auto; /* 居中显示 */
+    border: 1px solid #ccc; /* 添加边框以便观察 */
+    padding: 20px; /* 添加内边距 */
+  }
+  
+  canvas {
+    width: 100%; /* 让画布填充父元素宽度 */
+    height: 100%; /* 让画布填充父元素高度 */
+    border: 1px solid #000;
+  }
+
+  #qq_display{
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+    ;
+  }
+ 
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    .container {
+      width: 90%;
+    }
+  }
+  

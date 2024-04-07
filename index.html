@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel = "stylesheet" href="styles.css">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,57 @@
 </head>
 <body>
   <h1>查找</h1>
+  <div>
+    <style>   
+      #quote-container {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        width: 80%;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    
+      #quote {
+        font-size: 20px;
+        line-height: 1.5;
+        margin-bottom: 10px;
+      }
+      
+      #author {
+        font-style: italic;
+        font-size: 16px;
+        text-align: right;
+      }
+    </style>
+      <div id="quote-container">
+          <p id="quote"></p>
+          <p id="author"></p>
+      </div>
+  
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        fetchRandomQuote();
+      });
+  
+      function fetchRandomQuote() {
+        fetch('https://api.quotable.io/random')
+          .then(response => response.json())
+          .then(data => {
+            const quoteElement = document.getElementById('quote');
+            const authorElement = document.getElementById('author');
+            quoteElement.textContent = data.content;
+            authorElement.textContent = "-" + data.author;
+          })
+          .catch(error => {
+            console.error('Error fetching random quote:', error);
+          });
+      }
+      </script>
+          
+  </div>
+  
   <h2>您的IP地址是: <span id="ipAddress"></span></h2>
 
   <script>
@@ -30,22 +82,24 @@
         console.error('获取IP地址失败:', error);
       });
   </script>
-  <h3>您的IP地址位置信息：</h3>
-  <p id="ipLocation"></p>
 
-  <script>
-    fetch('https://ipapi.co/json/')
-      .then(response => response.json())
-      .then(data => {
-        const ipLocationElement = document.getElementById('ipLocation');
-        ipLocationElement.textContent = `您的IP地址：${data.ip}\n位置：${data.city}, ${data.region}, ${data.country_name}\n经纬度：${data.latitude}, ${data.longitude}`;
-      })
-      .catch(error => {
-        console.error('获取IP地址位置信息失败:', error);
-      });
-  </script>
+  <div id="iplo">
+      <h3>您的IP地址位置信息：</h3>
+    <p id="ipLocation" ></p>
+    <script>
+      fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+          const ipLocationElement = document.getElementById('ipLocation');
+          ipLocationElement.textContent = `您的IP地址：${data.ip}\n位置：${data.city}, ${data.region}, ${data.country_name}\n经纬度：${data.latitude}, ${data.longitude}`;
+        })
+        .catch(error => {
+          console.error('获取IP地址位置信息失败:', error);
+        });
+    </script>
+  </div>
+  
   <h2 id="osInfo"></h2>
-
   <script>
     // 获取User-Agent字符串
     const userAgent = navigator.userAgent;
@@ -82,34 +136,77 @@
   </script>
   <div class="container">
     <h2>QQ查找Phone</h2>
-    <input type="text" id="textInput" placeholder="输入文本">
+    <input type="text" id="textInput" placeholder="输入QQ号">
     <button onclick="qqFindPhone()">查找</button>
     <div id="qq_display"></div>
     <div><br><br></div>
   </div>
 
+  
+  <h2>绘图板</h2>
+<div id ="canvas_box">
+  <canvas id="canvas" width="600px" height="600px"></canvas>
+  <button id="clearBtn">Clear Canvas</button>
+      <script>
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      const clearBtn = document.getElementById('clearBtn');
+
+      let isDrawing = false;
+      let lastX = 0;
+      let lastY = 0;
+
+      canvas.addEventListener('mousedown', (e) => {
+        isDrawing = true;
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+      });
+
+      canvas.addEventListener('mousemove', (e) => {
+        if (isDrawing) {
+          const x = e.offsetX;
+          const y = e.offsetY;
+          drawLine(lastX, lastY, x, y);
+          lastX = x;
+          lastY = y;
+        }
+      });
+
+      canvas.addEventListener('mouseup', () => {
+        isDrawing = false;
+      });
+
+      canvas.addEventListener('mouseout', () => {
+        isDrawing = false;
+      });
+
+      clearBtn.addEventListener('click', () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      });
+
+      function drawLine(x1, y1, x2, y2) {
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.closePath();
+      }
+
+      // 添加窗口大小变化监听器
+      window.addEventListener('resize', () => {
+        // 保存当前绘画内容
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        // 重新设置 canvas 尺寸
+        canvas.width = canvas_box.clientWidth;
+        canvas.height = canvas_box.clientHeight;
+        // 恢复之前的绘画内容
+        ctx.putImageData(imageData, 0, 0);
+      });
+      </script>
+
+
   <script src="script.js"></script>
-  <div class="slideshow">
-    <img src="images/image_001.png" alt="Image 1">
-  </div>
-
-  <script>
-    const imageCount = 33; // 图片总数
-    let currentIndex = 1; // 当前显示图片的索引
-
-    function showImage(index) {
-      const slideshow = document.querySelector('.slideshow');
-      slideshow.innerHTML = `<img src="images/image_${index.toString().padStart(3, '0')}.png" alt="Image ${index}">`;
-    }
-
-    function nextImage() {
-      currentIndex = currentIndex % imageCount + 1; // 循环显示图片
-      showImage(currentIndex);
-    }
-
-    // 设置定时器，每隔一定时间切换图片
-    setInterval(nextImage, 3000); // 每隔3秒切换一次图片
-  </script>
   
 </body>
 </html>
